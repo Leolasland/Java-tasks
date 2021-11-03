@@ -6,6 +6,12 @@ public class Level1 {
     int field = N * M;
     int [][] fieldCoordinate = new int[N][M];
 
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < M; j++) {
+        fieldCoordinate[i][j] = 0;
+      }
+    }
+
     for (int i = 0; i < battalion.length; i += 2) {
       if (fieldCoordinate[battalion[i] - 1][battalion[i + 1] - 1] == 0) {
         fieldCoordinate[battalion[i] - 1][battalion[i + 1] - 1] = 1;
