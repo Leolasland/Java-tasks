@@ -1,49 +1,39 @@
 import java.util.*;
 
 public class Level1 {
-  public static int ConquestCampaign(int N, int M, int L, int [] battalion) {
-    int day = 1;
-    int field = N * M;
-    int [][] fieldCoordinate = new int[N][M];
+  public static int [] MadMax(int N, int [] Tele) {
+    int [] startImpulse = new int [N];
+    int x = 0;
+    boolean change = true;
 
     for (int i = 0; i < N; i++) {
-      for (int j = 0; j < M; j++) {
-        fieldCoordinate[i][j] = 0;
-      }
+      startImpulse[i] = Tele[i];
     }
 
-    for (int i = 0; i < battalion.length; i += 2) {
-      if (fieldCoordinate[battalion[i] - 1][battalion[i + 1] - 1] == 0) {
-        fieldCoordinate[battalion[i] - 1][battalion[i + 1] - 1] = 1;
-        field--;
-      }
-    }
-
-    while (field != 0) {
-      for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-          if (fieldCoordinate[i][j] == day) {
-            if (((i - 1) >= 0) && (fieldCoordinate[i - 1][j] == 0)) {
-              fieldCoordinate[i - 1][j] = day + 1;
-              field--;
-            }
-            if (((j - 1) >= 0) && (fieldCoordinate[i][j - 1] == 0)) {
-              fieldCoordinate[i][j - 1] = day + 1;
-              field--;
-            }
-            if (((j + 1) < M) && (fieldCoordinate[i][j + 1] == 0)) {
-              fieldCoordinate[i][j + 1] = day + 1;
-              field--;
-            }
-            if (((i + 1) < N) && (fieldCoordinate[i + 1][j] == 0)) {
-              fieldCoordinate[i + 1][j] = day + 1;
-              field--;
-            }
-          }
+    while (change) {
+      change = false;
+      for (int i = 0; i < (N - 1); i++) {
+        if (startImpulse[i] > startImpulse[i + 1]) {
+          x = startImpulse[i];
+          startImpulse[i] = startImpulse[i + 1];
+          startImpulse[i + 1] = x;
+          change = true;
         }
       }
-      day++;
     }
-    return day;
+    change = true;
+    while (change) {
+      change = false;
+      for (int i = N / 2; i < (N - 1); i++) {
+        if (startImpulse[i] < startImpulse[i + 1]) {
+          x = startImpulse[i];
+          startImpulse[i] = startImpulse[i + 1];
+          startImpulse[i + 1] = x;
+          change = true;
+        }
+      }
+    }
+
+    return startImpulse;
   }
 }
