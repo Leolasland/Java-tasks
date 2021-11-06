@@ -1,39 +1,42 @@
 import java.util.*;
 
 public class Level1 {
-  public static int [] MadMax(int N, int [] Tele) {
-    int [] startImpulse = new int [N];
+  public static int [] SynchronizingTables(int N, int [] ids, int [] salary) {
+    int [] sortedSalary = salary.clone();
+    int [] sortedID = ids.clone();
+    int [] table = new int[N];
     int x = 0;
     boolean change = true;
-
-    for (int i = 0; i < N; i++) {
-      startImpulse[i] = Tele[i];
-    }
+    HashMap<Integer, Integer> idsSalary = new HashMap<>();
 
     while (change) {
       change = false;
       for (int i = 0; i < (N - 1); i++) {
-        if (startImpulse[i] > startImpulse[i + 1]) {
-          x = startImpulse[i];
-          startImpulse[i] = startImpulse[i + 1];
-          startImpulse[i + 1] = x;
+        if (sortedID[i] > sortedID[i + 1]) {
+          x = sortedID[i];
+          sortedID[i] = sortedID[i + 1];
+          sortedID[i + 1] = x;
           change = true;
         }
-      }
-    }
-    change = true;
-    while (change) {
-      change = false;
-      for (int i = N / 2; i < (N - 1); i++) {
-        if (startImpulse[i] < startImpulse[i + 1]) {
-          x = startImpulse[i];
-          startImpulse[i] = startImpulse[i + 1];
-          startImpulse[i + 1] = x;
+        if (sortedSalary[i] > sortedSalary[i + 1]) {
+          x = sortedSalary[i];
+          sortedSalary[i] = sortedSalary[i + 1];
+          sortedSalary[i + 1] = x;
           change = true;
         }
       }
     }
 
-    return startImpulse;
+    for (int i = 0; i < N; i++) {
+      idsSalary.put(sortedID[i], sortedSalary[i]);
+    }
+
+    for (int i = 0; i < N; i++) {
+      if (idsSalary.containsKey(ids[i])) {
+        table[i] = idsSalary.get(ids[i]);
+      }
+    }
+
+    return table;
   }
 }
