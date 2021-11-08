@@ -1,42 +1,40 @@
 import java.util.*;
 
 public class Level1 {
-  public static int [] SynchronizingTables(int N, int [] ids, int [] salary) {
-    int [] sortedSalary = salary.clone();
-    int [] sortedID = ids.clone();
-    int [] table = new int[N];
-    int x = 0;
-    boolean change = true;
-    HashMap<Integer, Integer> idsSalary = new HashMap<>();
+  public static String PatternUnlock(int N, int [] hits) {
+    String unlock;
+    double distance = 0;
 
-    while (change) {
-      change = false;
-      for (int i = 0; i < (N - 1); i++) {
-        if (sortedID[i] > sortedID[i + 1]) {
-          x = sortedID[i];
-          sortedID[i] = sortedID[i + 1];
-          sortedID[i + 1] = x;
-          change = true;
-        }
-        if (sortedSalary[i] > sortedSalary[i + 1]) {
-          x = sortedSalary[i];
-          sortedSalary[i] = sortedSalary[i + 1];
-          sortedSalary[i + 1] = x;
-          change = true;
-        }
+    for (int i = 0; i < (N - 1); i++) {
+      if (searchPoint(hits[i], hits[ i + 1])) {
+        distance++;
+      } else {
+        distance += Math.sqrt(2);
       }
     }
+    unlock = String.format("%.5f", distance);
+    unlock = unlock.replace(".", "");
+    unlock = unlock.replace(",", "");
+    unlock = unlock.replace("0", "");
+    return unlock;
+  }
 
-    for (int i = 0; i < N; i++) {
-      idsSalary.put(sortedID[i], sortedSalary[i]);
-    }
-
-    for (int i = 0; i < N; i++) {
-      if (idsSalary.containsKey(ids[i])) {
-        table[i] = idsSalary.get(ids[i]);
+  static boolean searchPoint(int startPos, int nextPos) {
+    int [][] points = {{6, 1, 9}, {5, 2, 8}, {4, 3, 7}};
+    boolean searchResult = false;
+    for (int i = 0; i < points.length; i++) {
+      for (int j = 0; j < points[i].length; j++) {
+        if ((startPos == points[i][j]) && ((j + 1 < points[i].length) && (nextPos == points[i][j + 1]) ||
+                (j - 1 >= 0) && (nextPos == points[i][j - 1]) || (i - 1 >= 0) && (nextPos == points[i - 1][j]) ||
+                (i + 1 < points.length) && (nextPos == points[i + 1][j]))) {
+          searchResult = true;
+          break;
+        }
+      }
+      if (searchResult) {
+        break;
       }
     }
-
-    return table;
+    return searchResult;
   }
 }
