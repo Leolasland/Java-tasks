@@ -1,53 +1,36 @@
 import java.util.*;
 
 public class Level1 {
-  public static int [] WordSearch(int len, String s, String subs) {
-    String[] words = s.split("\\s+");
-    ArrayList<String> arrWords = new ArrayList<>();
-    StringBuilder stringBuffer = new StringBuilder();
-    int count = 0;
-    int index = 0;
-    while (index != words.length) {
-      if (count + words[index].length() <= len) {
-        count += words[index].length() + 1;
-        stringBuffer.append(words[index]).append(" ");
-        index++;
-      } else {
-        if (words[index].length() > len) {
-          stringBuffer.append(words[index], 0, len).append(" ");
-          arrWords.add(stringBuffer.toString());
-          stringBuffer = new StringBuilder();
-          stringBuffer.append(words[index].substring(len)).append(" ");
-          index++;
-        }
-        arrWords.add(stringBuffer.toString());
-        stringBuffer = new StringBuilder();
-        count = 0;
+  public static int SumOfThe(int N, int [] data) {
+    int sum = 0;
+    int estimatedAmount;
+    for (int i = 0; i < N; i++) {
+      estimatedAmount = data[i];
+      sum = checkSum(N - 1, arrayModificat(N - 1, data[i], data));
+      if (estimatedAmount == sum) {
+        break;
       }
     }
-    if (stringBuffer.length() > 0) {
-      arrWords.add(stringBuffer.toString());
-    }
-
-    words = arrWords.toArray(new String[0]);
-    int [] word = new int[words.length];
-    for (int i = 0; i < words.length; i++) {
-      if (strCheck(words[i], subs)) {
-        word[i] = 1;
-      } else {
-        word[i] = 0;
-      }
-    }
-    return word;
+    return sum;
   }
 
-  static boolean strCheck(String words, String subs) {
-    String [] checkArray = words.split("\\s+");
-    for (String s : checkArray) {
-      if (s.equals(subs)) {
-        return true;
+  static int [] arrayModificat(int len, int elem, int [] data) {
+    int [] newData = new int[len];
+    for (int i = 0; i < len; i++) {
+      if (data[i] == elem) {
+        System.arraycopy(data, 0, newData, 0, i);
+        System.arraycopy(data, i + 1, newData, i, len - i);
+        break;
       }
     }
-    return false;
+    return newData;
+  }
+
+  static int checkSum(int len, int [] data) {
+    int sum = 0;
+    for (int i = 0; i < len; i++) {
+      sum += data[i];
+    }
+    return sum;
   }
 }
