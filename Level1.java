@@ -1,40 +1,53 @@
 import java.util.*;
 
 public class Level1 {
-  public static String PatternUnlock(int N, int [] hits) {
-    String unlock;
-    double distance = 0;
-
-    for (int i = 0; i < (N - 1); i++) {
-      if (searchPoint(hits[i], hits[ i + 1])) {
-        distance++;
+  public static int [] WordSearch(int len, String s, String subs) {
+    String[] words = s.split("\\s+");
+    ArrayList<String> arrWords = new ArrayList<>();
+    StringBuilder stringBuffer = new StringBuilder();
+    int count = 0;
+    int index = 0;
+    while (index != words.length) {
+      if (count + words[index].length() <= len) {
+        count += words[index].length() + 1;
+        stringBuffer.append(words[index]).append(" ");
+        index++;
       } else {
-        distance += Math.sqrt(2);
+        if (words[index].length() > len) {
+          stringBuffer.append(words[index], 0, len).append(" ");
+          arrWords.add(stringBuffer.toString());
+          stringBuffer = new StringBuilder();
+          stringBuffer.append(words[index].substring(len)).append(" ");
+          index++;
+        }
+        arrWords.add(stringBuffer.toString());
+        stringBuffer = new StringBuilder();
+        count = 0;
       }
     }
-    unlock = String.format("%.5f", distance);
-    unlock = unlock.replace(".", "");
-    unlock = unlock.replace(",", "");
-    unlock = unlock.replace("0", "");
-    return unlock;
+    if (stringBuffer.length() > 0) {
+      arrWords.add(stringBuffer.toString());
+    }
+
+    words = arrWords.toArray(new String[0]);
+    int [] word = new int[words.length];
+    for (int i = 0; i < words.length; i++) {
+      if (strCheck(words[i], subs)) {
+        word[i] = 1;
+      } else {
+        word[i] = 0;
+      }
+    }
+    return word;
   }
 
-  static boolean searchPoint(int startPos, int nextPos) {
-    int [][] points = {{6, 1, 9}, {5, 2, 8}, {4, 3, 7}};
-    boolean searchResult = false;
-    for (int i = 0; i < points.length; i++) {
-      for (int j = 0; j < points[i].length; j++) {
-        if ((startPos == points[i][j]) && ((j + 1 < points[i].length) && (nextPos == points[i][j + 1]) ||
-                (j - 1 >= 0) && (nextPos == points[i][j - 1]) || (i - 1 >= 0) && (nextPos == points[i - 1][j]) ||
-                (i + 1 < points.length) && (nextPos == points[i + 1][j]))) {
-          searchResult = true;
-          break;
-        }
-      }
-      if (searchResult) {
-        break;
+  static boolean strCheck(String words, String subs) {
+    String [] checkArray = words.split("\\s+");
+    for (String s : checkArray) {
+      if (s.equals(subs)) {
+        return true;
       }
     }
-    return searchResult;
+    return false;
   }
 }
