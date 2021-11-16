@@ -4,14 +4,14 @@ public class Level1 {
   public static String TheRabbitsFoot(String s, boolean encode) {
     String res;
     if (encode) {
-      res = encrypt(s);
+      res = encrypt(s, encode);
     } else {
-      res = decrypt(s);
+      res = decrypt(s, encode);
     }
     return res;
   }
 
-  static String encrypt(String s) {
+  static String encrypt(String s, boolean encode) {
     String res;
     int len;
     int line;
@@ -31,11 +31,11 @@ public class Level1 {
         matrix[i] = res.substring(column * i, column * (i + 1));
       }
     }
-    res = collectString(matrix, column, line);
+    res = collectString(matrix, column, line, encode);
     return res;
   }
 
-  static String decrypt(String s) {
+  static String decrypt(String s, boolean encode) {
     String res;
     String [] matrix = s.split("\\s+");
     int len;
@@ -48,18 +48,18 @@ public class Level1 {
     if ((line * column) < len) {
       line++;
     }
-    res = collectString(matrix, line, column);
+    res = collectString(matrix, line, column, encode);
     return res;
   }
 
-  static String collectString(String [] matrix, int column, int line) {
+  static String collectString(String [] matrix, int column, int line, boolean encode) {
     StringBuilder bld = new StringBuilder();
     String res;
     for (int i = 0; i < column; i++) {
       for (int j = 0; j < line; j++) {
         bld.append(giveSymbol(matrix[j], i));
       }
-      if (i + 1 < column) {
+      if (encode && i + 1 < column) {
         bld.append(" ");
       }
     }
