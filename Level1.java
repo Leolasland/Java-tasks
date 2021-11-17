@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class printingCosts {
+public class Level1 {
   static int PrintingCosts(String Line) {
     int cost = 0;
     HashMap<Character, Integer> priceTable = new HashMap<>();
