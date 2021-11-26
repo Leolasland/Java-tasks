@@ -1,43 +1,59 @@
 import java.util.*;
 
 public class Level1 {
-  static String BigMinus(String s1, String s2) {
-    String res;
-    Long bigInts1 = Long.valueOf(s1);
-    Long bigInts2 = Long.valueOf(s2);
-    if (bigInts1.equals(bigInts2)) {
-      res = "0";
-    } else if (bigInts1 > bigInts2) {
-      res = minus(s1, s2);
-    } else {
-      res = minus(s2, s1);
+  static String MassVote(int N, int [] Votes) {
+    String result;
+    int max = findMax(N, Votes);
+    double percent;
+    int sum = findSum(N, Votes);
+    if (isUnique(Votes) == max) {
+      return "no winner";
     }
-    return res;
+    percent = max * 100.0 / sum;
+    if (percent > 50.00) {
+      result = "majority winner ";
+    } else {
+      result = "minority winner ";
+    }
+    result += (findPos(max, N, Votes) + 1);
+    return result;
   }
 
-  static String minus(String s1, String s2) {
-    String res;
-    int [] arrInts = new int[s1.length()];
-    int [] arrInts1 = new int[s1.length()];
-    int [] arrInts2 = new int[s1.length()];
-    int diff = s1.length() - s2.length();
-    for (int i = 0; i < s1.length(); i++) {
-      arrInts1[i] = Character.getNumericValue(s1.charAt(i));
-    }
-    for (int i = 0; i < s1.length(); i ++) {
-      if (i < diff) {
-        arrInts2[i] = 0;
-      } else {
-        arrInts2[i] = Character.getNumericValue(s2.charAt(i - diff));
+  static int findMax(int N, int [] array) {
+    int max = 0;
+    for (int i = 0; i < N; i++) {
+      if (array[i] > max) {
+        max = array[i];
       }
     }
-    for (int i = 0; i < s1.length(); i++) {
-      arrInts[i] = arrInts1[i] - arrInts2[i];
-      if (arrInts[i] < 0) {
-        arrInts[i] = (arrInts1[i] - arrInts2[i]) * (- 1);
+    return max;
+  }
+
+  static int isUnique(int[] array) {
+    for (int i = 0; i < array.length; i++) {
+      for (int j = i + 1; j < array.length; j++) {
+        if (array[i] == array [j]) {
+          return array[i];
+        }
       }
     }
-    res = Arrays.toString(arrInts).replaceAll("\\[|\\]|,|\\s", "");
-    return res;
+    return 0;
+  }
+
+  static int findSum(int N, int [] array) {
+    int sum = 0;
+    for (int i = 0; i < N; i++) {
+      sum += array[i];
+    }
+    return sum;
+  }
+
+  static int findPos(int max, int N, int [] array) {
+    for (int i = 0; i < N; i++) {
+      if (max == array[i]) {
+        return i;
+      }
+    }
+    return 0;
   }
 }
