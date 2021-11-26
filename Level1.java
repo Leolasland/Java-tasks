@@ -6,7 +6,7 @@ public class Level1 {
     int max = findMax(N, Votes);
     double percent;
     int sum = findSum(N, Votes);
-    if (isUnique(Votes) == max) {
+    if (isUnique(Votes, max) == max) {
       return "no winner";
     }
     percent = max * 100.0 / sum;
@@ -29,10 +29,10 @@ public class Level1 {
     return max;
   }
 
-  static int isUnique(int[] array) {
+  static int isUnique(int[] array, int max) {
     for (int i = 0; i < array.length; i++) {
       for (int j = i + 1; j < array.length; j++) {
-        if (array[i] == array [j]) {
+        if (array[i] == array[j] && array[j] == max) {
           return array[i];
         }
       }
