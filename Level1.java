@@ -1,59 +1,29 @@
 import java.util.*;
 
 public class Level1 {
-  static String MassVote(int N, int [] Votes) {
-    String result;
-    int max = findMax(N, Votes);
-    double percent;
-    int sum = findSum(N, Votes);
-    if (isUnique(Votes, max) == max) {
-      return "no winner";
-    }
-    percent = max * 100.0 / sum;
-    if (percent > 50.00) {
-      result = "majority winner ";
+  static int [] UFO(int N, int [] data, boolean octal) {
+    int [] res = new int [N];
+    if (octal) {
+      res = transToOstal(N, data);
     } else {
-      result = "minority winner ";
+      res = transToHex(N, data);
     }
-    result += (findPos(max, N, Votes) + 1);
-    return result;
+    return res;
   }
 
-  static int findMax(int N, int [] array) {
-    int max = 0;
+  static int [] transToOstal(int N, int [] data) {
+    int [] res = new int[N];
     for (int i = 0; i < N; i++) {
-      if (array[i] > max) {
-        max = array[i];
-      }
+      res[i] = Integer.parseInt(String.valueOf(data[i]), 8);
     }
-    return max;
+    return res;
   }
 
-  static int isUnique(int[] array, int max) {
-    for (int i = 0; i < array.length; i++) {
-      for (int j = i + 1; j < array.length; j++) {
-        if (array[i] == array[j] && array[j] == max) {
-          return array[i];
-        }
-      }
-    }
-    return 0;
-  }
-
-  static int findSum(int N, int [] array) {
-    int sum = 0;
+  static int [] transToHex(int N, int [] data) {
+    int [] res = new int[N];
     for (int i = 0; i < N; i++) {
-      sum += array[i];
+      res[i] = Integer.parseInt(String.valueOf(data[i]), 16);
     }
-    return sum;
-  }
-
-  static int findPos(int max, int N, int [] array) {
-    for (int i = 0; i < N; i++) {
-      if (max == array[i]) {
-        return i;
-      }
-    }
-    return 0;
+    return res;
   }
 }
