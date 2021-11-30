@@ -30,6 +30,10 @@ public class Level1 {
         i++;
       }
     }
-    return i % 2 == 0;
+    if (i % 2 == 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
