@@ -9,7 +9,7 @@ public class Level1 {
     }
     for (int i = 0; i < N; i++) {
       if (stop(track[i][1], track[i][2], res)) {
-        res += (track[i][1] - res);
+        res += minutes(track[i][1], track[i][2], res);
       }
       if (i + 1 < N) {
         res += (track[i + 1][0] - track[i][0]);
@@ -35,5 +35,21 @@ public class Level1 {
     } else {
       return true;
     }
+  }
+  static int minutes(int red, int green, int res) {
+    int i = 0;
+    while (res >= 0){
+      if (i % 2 == 0) {
+        res -= red;
+        i++;
+      } else {
+        res -= green;
+        i++;
+      }
+    }
+    if (res < 0) {
+      res *= -1;
+    }
+    return res;
   }
 }
