@@ -4,6 +4,9 @@ public class Level1 {
   static int Unmanned(int L, int N, int [][] track) {
     int res = 0;
 
+    if (track[0][0] >= L) {
+      return L;
+    }
     for (int i = 0; i < N; i++) {
       if (stop(track[i][1], track[i][2], res)) {
         res += (track[i][1] - res);
@@ -27,10 +30,6 @@ public class Level1 {
         i++;
       }
     }
-    if (i % 2 == 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return i % 2 == 0;
   }
 }
