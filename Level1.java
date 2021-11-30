@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Level1 {
   static int Unmanned(int L, int N, int [][] track) {
-    int res = 0;
+    int res = track[0][0];
 
     if (track[0][0] >= L) {
       return L;
