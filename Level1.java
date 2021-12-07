@@ -35,7 +35,7 @@ public class Level1 {
   static boolean checkNext(int [][] map, int [][] value, int posX, int posY, int h, int w) {
     for (int i = 0; i < h; i++) {
       for (int j = 0 ; j < w; j++) {
-        if (map[posX + i][posY + j] != value[i][j])
+        if (((posX + i) >= map.length) || ((posY + j >= map[i].length)) || (map[posX + i][posY + j] != value[i][j]))
           return false;
       }
     }
