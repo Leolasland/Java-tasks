@@ -1,55 +1,44 @@
 import java.util.*;
 
 public class Level1 {
-  static int Unmanned(int L, int N, int [][] track) {
-    int res = track[0][0];
-
-    if (track[0][0] >= L) {
-      return L;
-    }
-    for (int i = 0; i < N; i++) {
-      if (stop(track[i][1], track[i][2], res)) {
-        res += minutes(track[i][1], track[i][2], res);
+  static boolean TankRush(int H1, int W1, String S1, int H2, int W2, String S2) {
+    boolean find = true;
+    int [][] map = convertor(H1, W1, S1);
+    int [][] value = convertor(H2, W2, S2);
+    for (int i = 0; i < H1; i++) {
+      for (int j = 0; j < W1; j++) {
+        if (map[i][j] == value[0][0]) {
+          find = checkNext(map, value, i, j, H2, W2);
+          if (!find) {
+            break;
+          }
+        }
       }
-      if (i + 1 < N) {
-        res += (track[i + 1][0] - track[i][0]);
-      }
     }
-    res += (L - track[N - 1][0]);
-    return res;
+    return find;
   }
 
-  static boolean stop(int red, int green, int res) {
-    int i = 0;
-    while (res >= 0){
-      if (i % 2 == 0) {
-        res -= red;
-        i++;
-      } else {
-        res -= green;
-        i++;
+  static int [][] convertor(int h, int w, String str) {
+    int [][] arr = new int[h][w];
+    str = str.replaceAll("\\s+", "");
+    char [] strArr = str.toCharArray();
+    int count = 0;
+    for (int i = 0; i < h; i++) {
+      for (int j = 0; j < w; j++) {
+        arr[i][j] = Character.getNumericValue(strArr[count]);
+        count++;
       }
     }
-    if (i % 2 == 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return arr;
   }
-  static int minutes(int red, int green, int res) {
-    int i = 0;
-    while (res >= 0){
-      if (i % 2 == 0) {
-        res -= red;
-        i++;
-      } else {
-        res -= green;
-        i++;
+
+  static boolean checkNext(int [][] map, int [][] value, int posX, int posY, int h, int w) {
+    for (int i = 0; i < h; i++) {
+      for (int j = 0 ; j < w; j++) {
+        if (map[posX + i][posY + j] != value[i][j])
+          return false;
       }
     }
-    if (res < 0) {
-      res *= -1;
-    }
-    return res;
+    return true;
   }
 }
