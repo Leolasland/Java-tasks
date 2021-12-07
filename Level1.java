@@ -2,17 +2,20 @@ import java.util.*;
 
 public class Level1 {
   static boolean TankRush(int H1, int W1, String S1, int H2, int W2, String S2) {
-    boolean find = true;
+    boolean find = false;
     int [][] map = convertor(H1, W1, S1);
     int [][] value = convertor(H2, W2, S2);
     for (int i = 0; i < H1; i++) {
       for (int j = 0; j < W1; j++) {
         if (map[i][j] == value[0][0]) {
           find = checkNext(map, value, i, j, H2, W2);
-          if (!find) {
-            break;
-          }
         }
+        if (find) {
+          break;
+        }
+      }
+      if (find) {
+        break;
       }
     }
     return find;
