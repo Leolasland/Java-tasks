@@ -5,7 +5,10 @@ public class Level1 {
     boolean sorted = false;
     int check = N - 1;
     int tmp;
-    int [] sortedArr = data;
+    int [] sortedArr = new int[N];
+    for (int i = 0; i < N; i++) {
+      sortedArr[i] = data[i];
+    }
     sortedArr = sorting(sortedArr);
     for (int i = data.length - 1; i > 0; i--) {
       if (data[i] != N) {
