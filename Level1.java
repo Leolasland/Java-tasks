@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class Level1 {
  static String [] ShopOLAP(int N, String [] items) {
