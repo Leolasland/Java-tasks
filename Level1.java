@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Level1 {
   static String [] ShopOLAP(int N, String [] items) {
-    String [][] resArr = new String[N][N];
+    String [][] resArr = new String[N][2];
     HashMap<String, Integer> resMap = new HashMap<>();
     resArr = arrString(N, items);
     findDup(N, resArr);
@@ -33,7 +33,7 @@ public class Level1 {
   }
 
   static String [][] arrString(int N, String [] res) {
-    String [][] resArr = new String[N][N];
+    String [][] resArr = new String[N][2];
     for (int i = 0; i < N; i++) {
       resArr[i] = res[i].split(" ");
     }
@@ -66,12 +66,14 @@ public class Level1 {
     for (int i = 0; i < N; i++) {
       arr.add(res[i]);
     }
-    arr.remove(null);
+    for (int i = 0; i < N; i++) {
+      arr.remove(null);
+    }
     res = new String[arr.size()];
     for (int i = 0; i < arr.size(); i++) {
       res[i] = arr.get(i);
     }
-    resArr = new String[arr.size()][arr.size()];
+    resArr = new String[arr.size()][2];
     resArr = arrString(arr.size(), res);
     return resArr;
   }
