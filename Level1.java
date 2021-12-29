@@ -17,11 +17,14 @@ public class Level1 {
     sorting(arr);
     ArrayList<String> arrNames = new ArrayList<>(resMap.keySet());
     ArrayList<Integer> arrNumb = new ArrayList<>(resMap.values());
-    resArr = new String[arrNames.size()][arrNumb.size()];
+    resArr = new String[arrNames.size()][2];
     for (int i = 0; i < resMap.size(); i++) {
       resArr[i][0] = arrNames.get(arrNumb.indexOf(arr[i]));
       resArr[i][1] = Integer.toString(arrNumb.get(arrNumb.indexOf(arr[i])));
+      arrNames.remove(arrNumb.indexOf(arr[i]));
+      arrNumb.remove(arrNumb.indexOf(arr[i]));
     }
+    check(resArr);
     String [] res = new String[resArr.length];
     for (int i = 0; i < resArr.length; i++) {
       res[i] = resArr[i][0] + " " + resArr[i][1];
@@ -85,6 +88,25 @@ public class Level1 {
           arr[i+1] = x;
           xchange = true;
         }
+    }
+  }
+
+  static void check(String [][]resArr) {
+    String str = "";
+    String strTmp = "";
+    for (int i = 0; i < resArr.length; i++) {
+      for (int j = 0; j < resArr.length; j++) {
+        if (i == j)
+          continue;
+        if (resArr[i][1].equals(resArr[j][1])) {
+          str = new String(resArr[i][0]);
+          strTmp = new String(resArr[j][0]);
+          if (str.compareTo(strTmp) > 0 && i < j) {
+            resArr[i][0] = new String(strTmp);
+            resArr[j][0] = new String(str);
+          }
+        }
+      }
     }
   }
 }
