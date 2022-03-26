@@ -12,7 +12,7 @@ public class Level1 {
     char findCommand = command.charAt(0);
     if (command.length() > 2) {
       command = command.substring(2);
-      if (findCommand  == '4' || findCommand  == '5' || (findCommand  == '3' && !command.matches("^[0-9]")))
+      if (findCommand  == '4' || findCommand  == '5' || (findCommand  == '3' && !command.matches("-?[0-9]+")))
         return result;
       if (!tmp.isEmpty() && isUndo) {
         String str = "0" + result;
