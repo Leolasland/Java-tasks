@@ -17,18 +17,20 @@ public class Level1 {
         tmp.clear();
         tmp.add(str);
       }
-      if (findCommand == '1') {
-        result = result + command;
-      }
-      else if (findCommand == '2' && result != null) {
-        result = deleteNCharacters(command);
-      }
-      else if (findCommand == '3') {
+      if (findCommand == '3' && result != null) {
         result = issueChar(command);
       }
-      isUndo = false;
-      tmp.add(findCommand + result);
-      point = tmp.size() - 1;
+      else {
+        if (findCommand == '1') {
+          result = result + command;
+        }
+        else if (findCommand == '2' && result != null) {
+          result = deleteNCharacters(command);
+        }
+        isUndo = false;
+        tmp.add(findCommand + result);
+        point = tmp.size() - 1;
+      }
     }
     else if (findCommand == '4') {
       result = undo();
@@ -42,20 +44,16 @@ public class Level1 {
 
   static String deleteNCharacters(String command) {
     int n = Integer.parseInt(command);
-    if (n >= result.length()) {
+    if (n >= result.length())
       return result = "";
-    } else {
-      return result.substring(0, result.length() - n);
-    }
+    return result.substring(0, result.length() - n);
   }
 
   static String issueChar(String command) {
     int n = Integer.parseInt(command);
-    if (n >= result.length()) {
+    if (n >= result.length())
       return result = "";
-    } else {
-      return String.valueOf(result.charAt(n));
-    }
+    return String.valueOf(result.charAt(n));
   }
 
   static String undo() {
@@ -63,7 +61,7 @@ public class Level1 {
     String last = result;
     if (point >= 0 && point <= (tmp.size() - 1))
     {
-      if (Character.isDigit(tmp.get(point).charAt(0)))
+      if (!tmp.get(point).isEmpty() && Character.isDigit(tmp.get(point).charAt(0)))
         last = tmp.get(point).substring(1);
       else
         last = tmp.get(point);
