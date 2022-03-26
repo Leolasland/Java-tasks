@@ -19,6 +19,7 @@ public class Level1 {
       }
       if (findCommand == '3' && result != null) {
         result = issueChar(command);
+        isUndo = false;
       }
       else {
         if (findCommand == '1') {
@@ -44,16 +45,16 @@ public class Level1 {
 
   static String deleteNCharacters(String command) {
     int n = Integer.parseInt(command);
-    if (n >= result.length())
+    if (n >= result.length() || n < 0)
       return result = "";
     return result.substring(0, result.length() - n);
   }
 
   static String issueChar(String command) {
     int n = Integer.parseInt(command);
-    if (n >= result.length())
+    if (n >= tmp.get(tmp.size() - 1).length() || n < 0)
       return result = "";
-    return String.valueOf(result.charAt(n));
+    return String.valueOf(tmp.get(tmp.size() - 1).charAt(n));
   }
 
   static String undo() {
