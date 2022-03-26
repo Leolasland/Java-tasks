@@ -12,7 +12,7 @@ public class Level1 {
     char findCommand = command.charAt(0);
     if (command.length() > 2) {
       command = command.substring(2);
-      if (findCommand  == '4' || findCommand  == '5')
+      if (findCommand  == '4' || findCommand  == '5' || (findCommand  == '3' && !command.matches("^[0-9]")))
         return result;
       if (!tmp.isEmpty() && isUndo) {
         String str = result;
@@ -55,8 +55,9 @@ public class Level1 {
   static String issueChar(String command) {
     int n = Integer.parseInt(command);
     if (n >= tmp.get(tmp.size() - 1).length() || n < 0)
-      return result = "";
-    return String.valueOf(tmp.get(tmp.size() - 1).charAt(n));
+      return "";
+    String str = tmp.get(tmp.size() - 1).substring(1);
+    return String.valueOf(str.charAt(n));
   }
 
   static String undo() {
