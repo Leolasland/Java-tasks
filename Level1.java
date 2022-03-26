@@ -15,7 +15,7 @@ public class Level1 {
       if (findCommand  == '4' || findCommand  == '5' || (findCommand  == '3' && !command.matches("^[0-9]")))
         return result;
       if (!tmp.isEmpty() && isUndo) {
-        String str = result;
+        String str = "0" + result;
         tmp.clear();
         tmp.add(str);
       }
