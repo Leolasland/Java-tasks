@@ -57,6 +57,8 @@ public class Level1 {
     if (n >= tmp.get(tmp.size() - 1).length() || n < 0)
       return "";
     String str = tmp.get(tmp.size() - 1).substring(1);
+    if (n > str.length() - 1)
+      return "";
     return String.valueOf(str.charAt(n));
   }
 
