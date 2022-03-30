@@ -2,86 +2,61 @@ import java.util.*;
 
 public class Level1 {
 
-  static String result = "";
-  static List<String> tmp = new ArrayList<>();
-  static int point = 0;
-  static boolean isUndo = false;
+  static String BiggerGreater(String input) {
+    char tmp;
+    char [] inputArray = input.toCharArray();
+    int arrayLength = inputArray.length;
 
-
-  static String BastShoe(String command) {
-    char findCommand = command.charAt(0);
-    if (command.length() > 2) {
-      command = command.substring(2);
-      if (findCommand  == '4' || findCommand  == '5' || (findCommand  == '3' && !command.matches("-?[0-9]+")))
-        return result;
-      if (!tmp.isEmpty() && isUndo) {
-        String str = "0" + result;
-        tmp.clear();
-        tmp.add(str);
+    if (arrayLength == 2) {
+      if (inputArray[1] > inputArray[0]) {
+        tmp = inputArray[0];
+        inputArray[0] = inputArray[1];
+        inputArray[1] = tmp;
+        return String.valueOf(inputArray);
       }
-      if (findCommand == '3' && result != null) {
-        result = issueChar(command);
-        isUndo = false;
-      }
-      else {
-        if (findCommand == '1') {
-          result = result + command;
-        }
-        else if (findCommand == '2' && result != null) {
-          result = deleteNCharacters(command);
-        }
-        isUndo = false;
-        tmp.add(findCommand + result);
-        point = tmp.size() - 1;
-      }
-    }
-    else if (findCommand == '4') {
-      result = undo();
-      isUndo = true;
-    }
-    else if (findCommand == '5') {
-      result = redo();
-    }
-    return result;
-  }
-
-  static String deleteNCharacters(String command) {
-    int n = Integer.parseInt(command);
-    if (n >= result.length() || n < 0)
-      return result = "";
-    return result.substring(0, result.length() - n);
-  }
-
-  static String issueChar(String command) {
-    int n = Integer.parseInt(command);
-    if (n >= tmp.get(tmp.size() - 1).length() || n < 0)
       return "";
-    String str = tmp.get(tmp.size() - 1).substring(1);
-    if (n > str.length() - 1)
-      return "";
-    return String.valueOf(str.charAt(n));
-  }
-
-  static String undo() {
-    point--;
-    String last = result;
-    if (point >= 0 && point <= (tmp.size() - 1))
-    {
-      if (!tmp.get(point).isEmpty() && Character.isDigit(tmp.get(point).charAt(0)))
-        last = tmp.get(point).substring(1);
-      else
-        last = tmp.get(point);
     }
-    return last;
+
+    int check = checkChars(inputArray);
+    if (check == -1) {
+      return "";
+    }
+
+    if (check == arrayLength - 2) {
+      tmp = inputArray[arrayLength - 1];
+      inputArray[arrayLength - 1] = inputArray[arrayLength - 2];
+      inputArray[arrayLength - 2] = tmp;
+    }
+
+    char [] arr1 = new char[check + 1];
+    char [] arr2 = new char[arrayLength - (check + 1)];
+    System.arraycopy(inputArray, 0, arr1, 0, check + 1);
+    for (int i = 0, j = check + 1; j < arrayLength; i++, j++) {
+      arr2[i] = inputArray[j];
+    }
+
+    int checkRes = checkChars(arr2);
+    if (checkRes == -1) {
+      for (int i = arr2.length - 1; i > 0; i--) {
+        if (arr2[i] > arr1[arr1.length - 1]) {
+          tmp = arr1[arr1.length - 1];
+          arr1[arr1.length - 1] = arr2[i];
+          arr2[i] = tmp;
+          break;
+        }
+      }
+      Arrays.sort(arr2);
+    }
+
+    return String.valueOf(arr1) + String.valueOf(arr2);
   }
 
-  static String redo() {
-    point++;
-    String last = result;
-    if (point <= (tmp.size() - 1) && point >= 0)
-      last = tmp.get(point).substring(1);
-    if (point >= tmp.size())
-      point--;
-    return last;
+  static int checkChars(char [] inputArray) {
+    for (int i = inputArray.length - 1; i > 0; i--) {
+      if (inputArray[i] > inputArray[i - 1]) {
+        return i - 1;
+      }
+    }
+    return -1;
   }
 }
