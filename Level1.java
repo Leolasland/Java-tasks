@@ -16,7 +16,7 @@ public class Level1 {
     if (min == max) {
       return true;
     }
-
+    
     for (int i = 0; i < check.length; i++) {
       if (check[i] == min && check[i] != 0) {
         countMin++;
@@ -44,7 +44,7 @@ public class Level1 {
     for (int i = 0; i < check.length; i++) {
       if (result == 0 && check[i] != 0)
         result = check[i];
-      if (result > check[i])
+      if (result > check[i] && check[i] != 0)
         result = check[i];
     }
     return result;
