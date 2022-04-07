@@ -1,5 +1,6 @@
 import java.util.*;
 
+public class Level1 {
 static String[] delete(String[] tree, int h, int w) {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
@@ -94,4 +95,5 @@ static String build(String tree, int index, char ch) {
         builder.setCharAt(index, ch);
         return builder.toString();
     }
+}
 }
