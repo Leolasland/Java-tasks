@@ -1,137 +1,33 @@
 import java.util.*;
 
 public class Level1 {
+  public static void MatrixTurn(String [] Matrix, int M, int N, int T) {
+    StringBuilder [] builder = new StringBuilder[M];
+    int count = 0;
+    if (M > N) {
+      count = N / 2;
+    } else {
+      count = M / 2;
+    }
+    for (int i = 0; i < M; i++) {
+      builder[i] = new StringBuilder(Matrix[i]);
+    }
 
-  static String[] TreeOfLife(int H, int W, int N, String[] tree) {
-    for (int i = 0; i <= N; i++) {
-      if (i == 0) {
-        for (int j = 0; j < H; j++) {
-          tree[j] = tree[j].replace("+", "1");
-          tree[j] = tree[j].replace(".", "0");
+    for (int i = 1; i <= T ; i++) {
+      for (int j = 0; j < count; j++) {
+        for (int k = j; k < builder.length - 1 - j; k++) {
+          builder[k].insert(j, builder[k + 1].charAt(j));
+          builder[k + 1].delete(j, j + 1);
         }
-      } else if (i % 2 == 0) {
-        age(tree);
-        delete(tree, H, W);
-      } else {
-        age(tree);
-      }
-    }
-
-    for (int i = 0; i < H; i++) {
-      tree[i] = tree[i].replace("0", ".");
-      tree[i] = tree[i].replace("1", "+");
-      tree[i] = tree[i].replace("2", "+");
-      tree[i] = tree[i].replace("3", "+");
-      tree[i] = tree[i].replace("4", "+");
-    }
-
-    return tree;
-  }
-
-  static String[] age(String[] tree) {
-    for (int i = 0; i < tree.length; i++) {
-      tree[i] = tree[i].replace("3", "4");
-      tree[i] = tree[i].replace("2", "3");
-      tree[i] = tree[i].replace("1", "2");
-      tree[i] = tree[i].replace("0", "1");
-    }
-    return tree;
-  }
-
-  static String[] delete(String[] tree, int h, int w) {
-    for (int i = 0; i < h; i++) {
-      for (int j = 0; j < w; j++) {
-        if (tree[i].charAt(j) == '3' || tree[i].charAt(j) == '4') {
-          if (i == 0 && j == 0) {
-            tree[i] = build(tree[i], j, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-            if (tree[i + 1].charAt(j) == '1' || tree[i + 1].charAt(j) == '2') {
-              tree[i + 1] = build(tree[i + 1], j, '0');
-            }
-          }
-
-          if (i == 0 && j > 0 && j < (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-            if (tree[i + 1].charAt(j) == '1' || tree[i + 1].charAt(j) == '2') {
-              tree[i + 1] = build(tree[i + 1], j, '0');
-            }
-          }
-
-          if (i == 0 && j > 0 && j == (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-            if (tree[i + 1].charAt(j) == '1' || tree[i + 1].charAt(j) == '2') {
-              tree[i + 1] = build(tree[i + 1], j, '0');
-            }
-          }
-
-          if (i > 0 && i < (h - 1) && j == 0) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-            if (tree[i + 1].charAt(j) == '1' || tree[i + 1].charAt(j) == '2') {
-              tree[i + 1] = build(tree[i + 1], j, '0');
-            }
-          }
-
-          if (i > 0 && i < (h - 1) && j > 0 && j < (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-            if (tree[i + 1].charAt(j) == '1' || tree[i + 1].charAt(j) == '2') {
-              tree[i + 1] = build(tree[i + 1], j, '0');
-            }
-          }
-
-          if (i > 0 && i < h && j == (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-          }
-
-          if (i == (h - 1) && j == 0) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-          }
-
-          if (i == (h - 1) && j > 0 && j < (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-            if (tree[i].charAt(j + 1) == '1' || tree[i].charAt(j + 1) == '2') {
-              tree[i] = build(tree[i], j + 1, '0');
-            }
-          }
-
-          if (i == (h - 1) && j == (w - 1)) {
-            tree[i] = build(tree[i], j, '0');
-            tree[i - 1] = build(tree[i - 1], j, '0');
-            tree[i] = build(tree[i], j - 1, '0');
-          }
+        for (int k = builder.length - 1 - j; k > j ; k--) {
+          builder[k].insert(builder[k].length() - j, builder[k - 1].charAt(builder[k - 1].length() - 1 - j));
+          builder[k - 1].delete(builder[k - 1].length() - 1 - j, builder[k - 1].length() - j);
         }
       }
     }
 
-    return tree;
-  }
-
-  static String build(String tree, int index, char ch) {
-    StringBuilder builder = new StringBuilder(tree);
-    builder.setCharAt(index, ch);
-    return builder.toString();
+    for (int i = 0; i < builder.length; i++) {
+      Matrix[i] = builder[i].toString();
+    }
   }
 }
