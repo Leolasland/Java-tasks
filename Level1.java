@@ -1,33 +1,46 @@
 import java.util.*;
 
 public class Level1 {
-  public static void MatrixTurn(String [] Matrix, int M, int N, int T) {
-    StringBuilder [] builder = new StringBuilder[M];
-    int count = 0;
-    if (M > N) {
-      count = N / 2;
-    } else {
-      count = M / 2;
-    }
-    for (int i = 0; i < M; i++) {
-      builder[i] = new StringBuilder(Matrix[i]);
+
+    public static boolean TransformTransform(int [] A, int N) {
+        List<Integer> transformedList;
+        transformedList = transform(A);
+
+        int check = 0;
+        for (Integer integer : transformedList) {
+            check += integer;
+        }
+        return check % 2 == 0;
     }
 
-    for (int i = 1; i <= T ; i++) {
-      for (int j = 0; j < count; j++) {
-        for (int k = j; k < builder.length - 1 - j; k++) {
-          builder[k].insert(j, builder[k + 1].charAt(j));
-          builder[k + 1].delete(j, j + 1);
+    public static List<Integer> transform(int [] array) {
+        int k;
+        int max;
+        List<Integer> transformedList = new ArrayList<>();
+
+        for (int i = 0; i <= array.length - 1; i++){
+            for (int j = 0; j <= array.length - i - 1; j++){
+                k = i + j;
+                if (k - j == 0) {
+                    transformedList.add(array[0]);
+                }
+                else {
+                    max = array[j];
+                    max = newMax(array, max, k, j);
+                    transformedList.add(max);
+                }
+            }
+
         }
-        for (int k = builder.length - 1 - j; k > j ; k--) {
-          builder[k].insert(builder[k].length() - j, builder[k - 1].charAt(builder[k - 1].length() - 1 - j));
-          builder[k - 1].delete(builder[k - 1].length() - 1 - j, builder[k - 1].length() - j);
-        }
-      }
+        return transformedList;
     }
 
-    for (int i = 0; i < builder.length; i++) {
-      Matrix[i] = builder[i].toString();
+    public static int newMax(int [] array, int max, int k, int j) {
+        for (int i = j; i <= k; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        return max;
     }
-  }
 }
